@@ -36,7 +36,7 @@
 //
 -(void)trasition
 
-{
+{  //
     self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 20, 30)];
     self.imageView.center=self.view.center;
     self.images = @[[UIImage imageNamed:@"第1名"],
