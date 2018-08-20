@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		/hq7JMC/ZgsfCIRgdrIPQrgQAPc=
+		TlgIL5LaSWP03PinBjPj6fXmWIA=
 		</data>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		5vsbtj6wVc3NxfiWfi90sQB0gmw=
+		JuMLkLUQtlcj3X5FBqhuNlRy/DQ=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -45,21 +45,13 @@
 	<dict>
 		<key>Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/hq7JMC/ZgsfCIRgdrIPQrgQAPc=
-			</data>
 			<key>hash2</key>
 			<data>
-			F17O25FDecRQHYp4hCP1Qoi5D00xuzKuLGta2yPd1J0=
+			vUMu9dNKXUvKY+B4+2nZ1Imxvy3XmaZAdEsU0QUfCVc=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			rOEKBYamsFHHOktzp79BByQBy14=
-			</data>
 			<key>hash2</key>
 			<data>
 			ftDO6BT0JonFq9sG8DdO50vleO+ez1Whnhy5Wc2hf4g=
@@ -67,10 +59,6 @@
 		</dict>
 		<key>Base.lproj/LaunchScreen.storyboardc/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			n2t8gsDpfE6XkhG31p7IQJRxTxU=
-			</data>
 			<key>hash2</key>
 			<data>
 			HyVdXMU7Ux4/KalAao30mpWOK/lEPT4gvYN09wf31cg=
@@ -78,10 +66,6 @@
 		</dict>
 		<key>Base.lproj/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hlgaWleTcQrtI50mF46e+rM7JKk=
-			</data>
 			<key>hash2</key>
 			<data>
 			CXaBbWthOdQigBywSWYwqoY+oBj7H3HVAD1J5tjyt+A=
@@ -89,10 +73,6 @@
 		</dict>
 		<key>Base.lproj/Main.storyboardc/BYZ-38-t0r-view-8bC-Xf-vdC.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Y2dhN/SU4EryPWI74DEXubWuiUM=
-			</data>
 			<key>hash2</key>
 			<data>
 			GM36KnlfO/O0Xi8EyfUcgcqmxG9JVvtbftiiyT4gSrk=
@@ -100,10 +80,6 @@
 		</dict>
 		<key>Base.lproj/Main.storyboardc/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MDrKFvFWroTb0+KEbQShBcoBvo4=
-			</data>
 			<key>hash2</key>
 			<data>
 			PpvapAjR62rl6Ym4E6hkTgpKmBICxTaQXeUqcpHmmqQ=
@@ -111,10 +87,6 @@
 		</dict>
 		<key>Base.lproj/Main.storyboardc/UIViewController-BYZ-38-t0r.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3ERjMXqYRKa6nw9sE8j5mZS2xiY=
-			</data>
 			<key>hash2</key>
 			<data>
 			gMNZor4AvsyTm++iNKxSmnmnkiQCmOTo5iegEToC7Y4=

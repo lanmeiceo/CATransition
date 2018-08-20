@@ -7,7 +7,10 @@
 //
 
 #import "ViewController.h"
-
+#import "RedView.h"
+#import "DrawView.h"
+#import "ProgressView.h"
+#import "DrawLabelImageView.h"
 @interface ViewController ()<CAAnimationDelegate>
 @property(nonatomic ,strong) UIImageView *imageView;
 @property (nonatomic, copy) NSArray *images;
@@ -15,6 +18,8 @@
 @property (nonatomic, strong) CALayer *colorLayer;
 @property (nonatomic, strong) UIView *colorView;
 @property (nonatomic, strong) UIImageView *ballView;
+@property(strong,nonatomic)UISlider *slider;
+@property(strong,nonatomic)ProgressView *progressView;
 @end
 
 @implementation ViewController
@@ -24,9 +29,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
  
+    //每个view对应一个demo，而本类中每个方法(部分方法除外)对应一个demo
+    //任意拖拽view
+//    RedView *redView=[[RedView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
+//    redView.backgroundColor=[UIColor redColor];
+//    [self.view addSubview:redView];
+    
+    //上下文
+//    DrawView *drawV=[[DrawView alloc]initWithFrame:self.view.bounds];
+//    drawV.backgroundColor=[UIColor whiteColor];
+//
+//    [self.view addSubview:drawV];
+    
+    //进度条结合动画,未达到预期效果
+//     self.progressView=[[ProgressView alloc]initWithFrame:CGRectMake(50, 50,  self.view.frame.size.width-100,  self.view.frame.size.width-100)];
+//    self.progressView.backgroundColor=[UIColor redColor];
+//    [self.view addSubview:self.progressView];
+//    [self.view addSubview:self.slider];
+
+        DrawLabelImageView *drawV=[[DrawLabelImageView alloc]initWithFrame:CGRectMake(50, 50,  self.view.frame.size.width-100,  self.view.frame.size.width-100)];
+        drawV.backgroundColor=[UIColor grayColor];
+    
+        [self.view addSubview:drawV];
+    
 }
+//-----progressview----
 
-
+-(UISlider *)slider
+{
+    if (!_slider) {
+        _slider=[[UISlider alloc]initWithFrame:CGRectMake(0, 500, self.view.frame.size.width, 10)];
+        _slider.minimumValue=0.0;
+        _slider.maximumValue=100.0;
+        [_slider addTarget:self action:@selector(sliderMethod:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _slider;
+}
+-(void)sliderMethod:(UISlider*)slider
+{
+    NSLog(@"%.2f",slider.value);
+    self.progressView.progressValue=slider.value;
+}
+//----
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     //通过调用不同的方法来查看各个动画效果
@@ -34,12 +78,56 @@
     //configure the transaction
 
 }
+
+//平移
+-(void)makeTransform
+{
+    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
+    self.imageView.center=self.view.center;
+    self.imageView.image=[UIImage imageNamed:@"第1名"];
+    [self.view addSubview:self.imageView];
+    [UIView animateWithDuration:2 animations:^{
+        //可以通过按钮点击比较两个效果
+        //使用make,是相对于最原始的位置做的改变
+//        self.imageView.transform=CGAffineTransformMakeTranslation(0, 100);
+        //相对于上一次做改变
+        self.imageView.transform=CGAffineTransformTranslate(self.imageView.transform, 0, 100);
+    }];
+}
+//旋转
+-(void)makeRotaion
+{
+    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
+    self.imageView.center=self.view.center;
+    self.imageView.image=[UIImage imageNamed:@"第1名"];
+    [self.view addSubview:self.imageView];
+    [UIView animateWithDuration:2 animations:^{
+    self.imageView.transform=CGAffineTransformMakeRotation(M_PI_4);
+    self.imageView.transform=CGAffineTransformRotate(self.imageView.transform, M_PI_4);
+    }];
+}
+
+//缩放
+-(void)makeScale
+{
+    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
+    self.imageView.center=self.view.center;
+    self.imageView.image=[UIImage imageNamed:@"第1名"];
+    [self.view addSubview:self.imageView];
+    [UIView animateWithDuration:2 animations:^{
+        self.imageView.transform=CGAffineTransformMakeScale(0.8, 0.8);
+        self.imageView.transform=CGAffineTransformScale(self.imageView.transform, 0.8, 0.8);
+    }];
+}
+
+
+
 //每个方法都是一个动画demo
 //
 -(void)trasition
 
 {  //
-    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 20, 30)];
+    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
     self.imageView.center=self.view.center;
     self.images = @[[UIImage imageNamed:@"第1名"],
                     [UIImage imageNamed:@"第2名"],

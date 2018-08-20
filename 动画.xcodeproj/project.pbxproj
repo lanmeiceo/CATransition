@@ -15,6 +15,10 @@
 		6115598820EA0828002C8CB4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6115598720EA0828002C8CB4 /* main.m */; };
 		6115599220EA0828002C8CB4 /* __Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6115599120EA0828002C8CB4 /* __Tests.m */; };
 		6115599D20EA0828002C8CB4 /* __UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6115599C20EA0828002C8CB4 /* __UITests.m */; };
+		61B3AEB92127F4E300A3A950 /* RedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B3AEB82127F4E300A3A950 /* RedView.m */; };
+		61B3AEBC2129348E00A3A950 /* DrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B3AEBB2129348E00A3A950 /* DrawView.m */; };
+		61B3AEC221296A8600A3A950 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B3AEC121296A8600A3A950 /* ProgressView.m */; };
+		61B3AEC5212986CA00A3A950 /* DrawLabelImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B3AEC4212986CA00A3A950 /* DrawLabelImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,14 @@
 		6115599820EA0828002C8CB4 /* 动画UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "动画UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6115599C20EA0828002C8CB4 /* __UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = __UITests.m; sourceTree = "<group>"; };
 		6115599E20EA0828002C8CB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61B3AEB72127F4E300A3A950 /* RedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RedView.h; sourceTree = "<group>"; };
+		61B3AEB82127F4E300A3A950 /* RedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedView.m; sourceTree = "<group>"; };
+		61B3AEBA2129348D00A3A950 /* DrawView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawView.h; sourceTree = "<group>"; };
+		61B3AEBB2129348E00A3A950 /* DrawView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawView.m; sourceTree = "<group>"; };
+		61B3AEC021296A8600A3A950 /* ProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		61B3AEC121296A8600A3A950 /* ProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		61B3AEC3212986CA00A3A950 /* DrawLabelImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawLabelImageView.h; sourceTree = "<group>"; };
+		61B3AEC4212986CA00A3A950 /* DrawLabelImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawLabelImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +117,14 @@
 				6115597920EA0826002C8CB4 /* AppDelegate.m */,
 				6115597B20EA0826002C8CB4 /* ViewController.h */,
 				6115597C20EA0826002C8CB4 /* ViewController.m */,
+				61B3AEB72127F4E300A3A950 /* RedView.h */,
+				61B3AEB82127F4E300A3A950 /* RedView.m */,
+				61B3AEBA2129348D00A3A950 /* DrawView.h */,
+				61B3AEBB2129348E00A3A950 /* DrawView.m */,
+				61B3AEC021296A8600A3A950 /* ProgressView.h */,
+				61B3AEC121296A8600A3A950 /* ProgressView.m */,
+				61B3AEC3212986CA00A3A950 /* DrawLabelImageView.h */,
+				61B3AEC4212986CA00A3A950 /* DrawLabelImageView.m */,
 				6115597E20EA0826002C8CB4 /* Main.storyboard */,
 				6115598120EA0828002C8CB4 /* Assets.xcassets */,
 				6115598320EA0828002C8CB4 /* LaunchScreen.storyboard */,
@@ -264,7 +284,11 @@
 			files = (
 				6115597D20EA0826002C8CB4 /* ViewController.m in Sources */,
 				6115598820EA0828002C8CB4 /* main.m in Sources */,
+				61B3AEB92127F4E300A3A950 /* RedView.m in Sources */,
 				6115597A20EA0826002C8CB4 /* AppDelegate.m in Sources */,
+				61B3AEBC2129348E00A3A950 /* DrawView.m in Sources */,
+				61B3AEC221296A8600A3A950 /* ProgressView.m in Sources */,
+				61B3AEC5212986CA00A3A950 /* DrawLabelImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
