@@ -11,18 +11,21 @@
 #import "DrawView.h"
 #import "ProgressView.h"
 #import "DrawLabelImageView.h"
+#import "DisplayLinkTimerView.h"
 @interface ViewController ()<CAAnimationDelegate>
 @property(nonatomic ,strong) UIImageView *imageView;
 @property (nonatomic, copy) NSArray *images;
 @property(nonatomic ,strong)CALayer *shipLayer;
 @property (nonatomic, strong) CALayer *colorLayer;
 @property (nonatomic, strong) UIView *colorView;
+
 @property (nonatomic, strong) UIImageView *ballView;
 @property(strong,nonatomic)UISlider *slider;
 @property(strong,nonatomic)ProgressView *progressView;
 @end
 
 @implementation ViewController
+#define AngleFromNumber(num) ((num)/180.0*M_PI)
 
 
 //显示动画
@@ -47,10 +50,16 @@
 //    [self.view addSubview:self.progressView];
 //    [self.view addSubview:self.slider];
 
-        DrawLabelImageView *drawV=[[DrawLabelImageView alloc]initWithFrame:CGRectMake(50, 50,  self.view.frame.size.width-100,  self.view.frame.size.width-100)];
-        drawV.backgroundColor=[UIColor grayColor];
+    //画文字图片
+//        DrawLabelImageView *drawV=[[DrawLabelImageView alloc]initWithFrame:CGRectMake(50, 50,  self.view.frame.size.width-100,  self.view.frame.size.width-100)];
+//        drawV.backgroundColor=[UIColor grayColor];
+//
+//        [self.view addSubview:drawV];
     
-        [self.view addSubview:drawV];
+    //定时器（DisplayLink更顺畅）
+//    DisplayLinkTimerView *view=[[DisplayLinkTimerView alloc]initWithFrame:self.view.bounds];
+//    [self.view addSubview:view];
+    [self rotationAni];
     
 }
 //-----progressview----
@@ -76,16 +85,42 @@
     //通过调用不同的方法来查看各个动画效果
 //    [self animationGroup];
     //configure the transaction
-
+  
 }
 
+-(void)creatImgView
+{
+        self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
+        self.imageView.center=self.view.center;
+        self.imageView.image=[UIImage imageNamed:@"第1名"];
+        [self.view addSubview:self.imageView];
+  
+
+}
+//类似iPhone APP删除时icon抖动效果
+-(void)rotationAni
+{
+    
+    [self creatImgView];
+     //CAKeyframeAnimation可以设置多个值
+    CAKeyframeAnimation *ani=[CAKeyframeAnimation animation];
+    //属性值
+    ani.keyPath=@"transform.rotation";
+    ani.values=@[@(AngleFromNumber(-5)),@(AngleFromNumber(5))];
+    //执行次数
+    ani.repeatCount=MAXFLOAT;//这里等价于    ani.values=@[@(AngleFromNumber(-5)),@(AngleFromNumber(5)),@(AngleFromNumber(-5))];
+   //执行时间（可以控制动画的快慢）
+    ani.duration=2;
+    
+    //执行完后自动返回
+    ani.autoreverses=YES;
+    [self.imageView.layer addAnimation:ani forKey:nil];
+}
 //平移
 -(void)makeTransform
 {
-    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
-    self.imageView.center=self.view.center;
-    self.imageView.image=[UIImage imageNamed:@"第1名"];
-    [self.view addSubview:self.imageView];
+   
+    [self creatImgView];
     [UIView animateWithDuration:2 animations:^{
         //可以通过按钮点击比较两个效果
         //使用make,是相对于最原始的位置做的改变
@@ -97,10 +132,8 @@
 //旋转
 -(void)makeRotaion
 {
-    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
-    self.imageView.center=self.view.center;
-    self.imageView.image=[UIImage imageNamed:@"第1名"];
-    [self.view addSubview:self.imageView];
+    [self creatImgView];
+
     [UIView animateWithDuration:2 animations:^{
     self.imageView.transform=CGAffineTransformMakeRotation(M_PI_4);
     self.imageView.transform=CGAffineTransformRotate(self.imageView.transform, M_PI_4);
@@ -110,10 +143,8 @@
 //缩放
 -(void)makeScale
 {
-    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
-    self.imageView.center=self.view.center;
-    self.imageView.image=[UIImage imageNamed:@"第1名"];
-    [self.view addSubview:self.imageView];
+    [self creatImgView];
+
     [UIView animateWithDuration:2 animations:^{
         self.imageView.transform=CGAffineTransformMakeScale(0.8, 0.8);
         self.imageView.transform=CGAffineTransformScale(self.imageView.transform, 0.8, 0.8);
@@ -124,6 +155,25 @@
 
 //每个方法都是一个动画demo
 //
+-(void)baseAnimation
+{
+    UIView *redV=[[UIView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
+    redV.backgroundColor=[UIColor redColor];
+    [self.view addSubview:redV];
+    //设置动画对象（layer的属性）
+    CABasicAnimation *ani=[CABasicAnimation animation];
+    //设置属性值
+    ani.keyPath=@"position.x";
+    ani.toValue=@300;
+    //动画完成会自动删除动画
+
+    //两个同时设置可不返回
+    [ani setRemovedOnCompletion:NO];
+    ani.fillMode=kCAFillModeForwards;
+
+    [redV.layer addAnimation:ani forKey:nil];
+    
+}
 -(void)trasition
 
 {  //
