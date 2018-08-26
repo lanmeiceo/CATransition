@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		610FE3B2213276A4006DB6BA /* MusicLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FE3B1213276A4006DB6BA /* MusicLabelView.m */; };
 		6115597A20EA0826002C8CB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6115597920EA0826002C8CB4 /* AppDelegate.m */; };
 		6115597D20EA0826002C8CB4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6115597C20EA0826002C8CB4 /* ViewController.m */; };
 		6115598020EA0826002C8CB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6115597E20EA0826002C8CB4 /* Main.storyboard */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		610FE3B0213276A4006DB6BA /* MusicLabelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MusicLabelView.h; sourceTree = "<group>"; };
+		610FE3B1213276A4006DB6BA /* MusicLabelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicLabelView.m; sourceTree = "<group>"; };
 		6115597520EA0826002C8CB4 /* 动画.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "动画.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6115597820EA0826002C8CB4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6115597920EA0826002C8CB4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 				61B3AEC121296A8600A3A950 /* ProgressView.m */,
 				61B3AEC3212986CA00A3A950 /* DrawLabelImageView.h */,
 				61B3AEC4212986CA00A3A950 /* DrawLabelImageView.m */,
+				610FE3B0213276A4006DB6BA /* MusicLabelView.h */,
+				610FE3B1213276A4006DB6BA /* MusicLabelView.m */,
 				6115597E20EA0826002C8CB4 /* Main.storyboard */,
 				613D99B8212CE7D600BB47CD /* DisplayLinkTimerView.h */,
 				613D99B9212CE7D600BB47CD /* DisplayLinkTimerView.m */,
@@ -290,6 +295,7 @@
 				6115597D20EA0826002C8CB4 /* ViewController.m in Sources */,
 				613D99BA212CE7D600BB47CD /* DisplayLinkTimerView.m in Sources */,
 				6115598820EA0828002C8CB4 /* main.m in Sources */,
+				610FE3B2213276A4006DB6BA /* MusicLabelView.m in Sources */,
 				61B3AEB92127F4E300A3A950 /* RedView.m in Sources */,
 				6115597A20EA0826002C8CB4 /* AppDelegate.m in Sources */,
 				61B3AEBC2129348E00A3A950 /* DrawView.m in Sources */,

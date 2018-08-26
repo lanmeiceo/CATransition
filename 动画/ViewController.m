@@ -12,6 +12,7 @@
 #import "ProgressView.h"
 #import "DrawLabelImageView.h"
 #import "DisplayLinkTimerView.h"
+#import "MusicLabelView.h"
 @interface ViewController ()<CAAnimationDelegate>
 @property(nonatomic ,strong) UIImageView *imageView;
 @property (nonatomic, copy) NSArray *images;
@@ -26,12 +27,21 @@
 
 @implementation ViewController
 #define AngleFromNumber(num) ((num)/180.0*M_PI)
-
+/*
+ UIView动画与核心动画区别
+ 1.核心动画只作用在layer
+ 2.核心动画看到的都是假象，它并没有修改UIView的真实位置
+ 
+ 使用核心动画的情况
+ 1.不需要用户交互时
+ 2.要根据路径做动画时
+ 3要做转场动画时
+ */
 
 //显示动画
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
+
     //每个view对应一个demo，而本类中每个方法(部分方法除外)对应一个demo
     //任意拖拽view
 //    RedView *redView=[[RedView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
@@ -59,7 +69,16 @@
     //定时器（DisplayLink更顺畅）
 //    DisplayLinkTimerView *view=[[DisplayLinkTimerView alloc]initWithFrame:self.view.bounds];
 //    [self.view addSubview:view];
-    [self rotationAni];
+    
+    //调用traiAni时打开注释
+//    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(50, 50, 200, 400)];
+//    self.imageView.center=self.view.center;
+//    [self.view addSubview:self.imageView];
+    
+    //音乐条
+    MusicLabelView *view=[[MusicLabelView alloc]initWithFrame:CGRectMake(50, 50, 300, 300)];
+    view.backgroundColor=[UIColor grayColor];
+    [self.view addSubview:view];
     
 }
 //-----progressview----
@@ -85,7 +104,9 @@
     //通过调用不同的方法来查看各个动画效果
 //    [self animationGroup];
     //configure the transaction
-  
+//    [self traiAni];
+    [self AniGroup];
+
 }
 
 -(void)creatImgView
@@ -97,7 +118,84 @@
   
 
 }
+
+//动画组
+-(void)AniGroup
+{
+    [self creatImgView];
+    CABasicAnimation *ani=[CABasicAnimation animation];
+    ani.keyPath=@"transform.scale";
+    ani.toValue=@0.5;
+    
+    CABasicAnimation *ani2=[CABasicAnimation animation];
+    ani2.keyPath=@"position.y";
+    ani2.toValue=@130;
+    
+    CAAnimationGroup *group=[CAAnimationGroup animation];
+    group.animations=@[ani,ani2];
+    group.fillMode=kCAFillModeForwards;
+    group.removedOnCompletion=NO;
+    [self.imageView.layer addAnimation:group forKey:nil];
+    
+}
+//转场动画
+static int i=0;
+-(void)traiAni
+{
+    /*
+     //注释代码写在写在viewdidiload
+     self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(50, 50, 200, 400)];
+     self.imageView.center=self.view.center;
+     [self.view addSubview:self.imageView];
+     */
+    //方法在touchbegan调用
+    i++;
+    if (i==5) {
+        i=1;
+    }
+    self.imageView.image=[UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
+    
+    CATransition *tra=[CATransition animation];
+    tra.duration=1;
+
+    tra.type=@"pageCurl";//翻页效果（上翻） 下翻是pageUnCurl
+    //动画起始结束位置
+    tra.startProgress=0.5;
+    tra.endProgress=0.3;
+ /*
+  fade 交叉淡化过渡
+  push 新视图把旧视图推送出去
+  moveIn 新视图移到旧视图上面
+  cube 立体翻滚
+  reveal 旧视图移开，显示下面的新视图
+  oglFlip 上下左右翻转效果
+  suckEffect 收缩效果，如一块布被抽走
+  rippleEffect 水滴效果
+  pageCurl 翻页效果（上翻）
+  pageUnCurl 下翻
+  cameraTrisHollowOpen 相机镜头打开效果
+  cameraTrisHollowClose 相机镜头关闭效果
+
+
+  */
+    [self.imageView.layer addAnimation:tra forKey:nil];
+    
+    
+    //这里也可以用
+  /*  [UIView transitionWithView:self.imageView duration:2.0 options:UIViewAnimationOptionTransitionCurlUp animations:^{
+        i++;
+        if (i==5) {
+            i=1;
+        }
+        self.imageView.image=[UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
+    } completion:^(BOOL finished) {
+        
+    }];
+   */
+}
+//-----CAKeyframeAnimation动画---
 //类似iPhone APP删除时icon抖动效果
+//1.指定values
 -(void)rotationAni
 {
     
@@ -116,6 +214,25 @@
     ani.autoreverses=YES;
     [self.imageView.layer addAnimation:ani forKey:nil];
 }
+//2.指定path
+-(void)keyFrameAniWithPath
+{
+    [self creatImgView];
+    CAKeyframeAnimation *ani=[CAKeyframeAnimation animation];
+   
+    ani.keyPath=@"position";
+    
+    UIBezierPath *path=[UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(100, 50)];
+    [path addLineToPoint:CGPointMake(200, 100)];
+    [path addLineToPoint:CGPointMake(250, 130)];
+    ani.path=path.CGPath;
+    ani.duration=2.0;
+    [self.imageView.layer addAnimation:ani forKey:nil];
+    
+
+}
+//-------------
 //平移
 -(void)makeTransform
 {
