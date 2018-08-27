@@ -17,6 +17,7 @@
     // Drawing code
 }
 */
+//音乐振动条
 -(instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
