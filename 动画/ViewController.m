@@ -27,6 +27,9 @@
 
 @implementation ViewController
 #define AngleFromNumber(num) ((num)/180.0*M_PI)
+#define HOME_SCREEN_SIZE         [UIScreen mainScreen].bounds.size
+#define HOME_SCREEN_WIDTH        HOME_SCREEN_SIZE.width
+#define HOME_SCREEN_HEIGHT       HOME_SCREEN_SIZE.height
 /*
  UIView动画与核心动画区别
  1.核心动画只作用在layer
@@ -76,9 +79,11 @@
 //    [self.view addSubview:self.imageView];
     
     //音乐条
-    MusicLabelView *view=[[MusicLabelView alloc]initWithFrame:CGRectMake(50, 50, 300, 300)];
-    view.backgroundColor=[UIColor grayColor];
-    [self.view addSubview:view];
+//    MusicLabelView *view=[[MusicLabelView alloc]initWithFrame:CGRectMake(50, 50, 300, 300)];
+//    view.backgroundColor=[UIColor grayColor];
+//    [self.view addSubview:view];
+
+//    [self makeTransform];
     
 }
 //-----progressview----
@@ -105,15 +110,20 @@
 //    [self animationGroup];
     //configure the transaction
 //    [self traiAni];
-    [self AniGroup];
-
+//    [self AniGroup];
+//    [self makeTransform];
+//    [self KeyframeAnimationANDCAMediaTimingFunction];
+    [self viewTiming];
 }
 
 -(void)creatImgView
 {
-        self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
-        self.imageView.center=self.view.center;
-        self.imageView.image=[UIImage imageNamed:@"第1名"];
+//        self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
+    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(0, HOME_SCREEN_HEIGHT, HOME_SCREEN_WIDTH, 300)];
+
+//        self.imageView.center=self.view.center;
+    self.imageView.backgroundColor=[UIColor blackColor];
+//        self.imageView.image=[UIImage imageNamed:@"第1名"];
         [self.view addSubview:self.imageView];
   
 
@@ -136,7 +146,7 @@
     group.fillMode=kCAFillModeForwards;
     group.removedOnCompletion=NO;
     [self.imageView.layer addAnimation:group forKey:nil];
-    
+
 }
 //转场动画
 static int i=0;
@@ -238,12 +248,12 @@ static int i=0;
 {
    
     [self creatImgView];
-    [UIView animateWithDuration:2 animations:^{
+    [UIView animateWithDuration:1.0f animations:^{
         //可以通过按钮点击比较两个效果
         //使用make,是相对于最原始的位置做的改变
 //        self.imageView.transform=CGAffineTransformMakeTranslation(0, 100);
         //相对于上一次做改变
-        self.imageView.transform=CGAffineTransformTranslate(self.imageView.transform, 0, 100);
+        self.imageView.transform=CGAffineTransformTranslate(self.imageView.transform, 0, -100);
     }];
 }
 //旋转
