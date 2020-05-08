@@ -44,7 +44,10 @@
 //显示动画
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+//    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(50, 50, 200, 400)];
+//      self.imageView.center=self.view.center;
+//      [self.view addSubview:self.imageView];
+    
     //每个view对应一个demo，而本类中每个方法(部分方法除外)对应一个demo
     //任意拖拽view
 //    RedView *redView=[[RedView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
@@ -85,7 +88,22 @@
 
 //    [self makeTransform];
     
+    _colorView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    _colorView.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:_colorView];
 }
+
+//放大过程中出现的缓慢动画
+- (void) shakeToShow:(UIView*)aView{
+    CAKeyframeAnimation* animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    animation.duration = 0.2;
+    NSMutableArray *values = [NSMutableArray array];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    animation.values = values;
+    [aView.layer addAnimation:animation forKey:nil];
+}
+
 //-----progressview----
 
 -(UISlider *)slider
@@ -113,13 +131,16 @@
 //    [self AniGroup];
 //    [self makeTransform];
 //    [self KeyframeAnimationANDCAMediaTimingFunction];
-    [self viewTiming];
+//    [self viewTiming];
+    
+//    [self shakeToShow:_colorView];
+
 }
 
 -(void)creatImgView
 {
-//        self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
-    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(0, HOME_SCREEN_HEIGHT, HOME_SCREEN_WIDTH, 300)];
+        self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
+//    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(0, HOME_SCREEN_HEIGHT, HOME_SCREEN_WIDTH, 300)];
 
 //        self.imageView.center=self.view.center;
     self.imageView.backgroundColor=[UIColor blackColor];
@@ -128,23 +149,23 @@
   
 
 }
-
+#pragma mark - 各种动画
 //动画组
 -(void)AniGroup
 {
     [self creatImgView];
-    CABasicAnimation *ani=[CABasicAnimation animation];
-    ani.keyPath=@"transform.scale";
-    ani.toValue=@0.5;
+    CABasicAnimation *ani = [CABasicAnimation animation];
+    ani.keyPath = @"transform.scale";
+    ani.toValue = @0.5;
     
-    CABasicAnimation *ani2=[CABasicAnimation animation];
-    ani2.keyPath=@"position.y";
-    ani2.toValue=@130;
+    CABasicAnimation *ani2 = [CABasicAnimation animation];
+    ani2.keyPath = @"position.y";
+    ani2.toValue = @130;
     
-    CAAnimationGroup *group=[CAAnimationGroup animation];
-    group.animations=@[ani,ani2];
-    group.fillMode=kCAFillModeForwards;
-    group.removedOnCompletion=NO;
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.animations = @[ani,ani2];
+    group.fillMode = kCAFillModeForwards;
+    group.removedOnCompletion = NO;
     [self.imageView.layer addAnimation:group forKey:nil];
 
 }
@@ -165,10 +186,10 @@ static int i=0;
     }
     self.imageView.image=[UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
     
-    CATransition *tra=[CATransition animation];
-    tra.duration=1;
+    CATransition *tra = [CATransition animation];
+    tra.duration = 3;
 
-    tra.type=@"pageCurl";//翻页效果（上翻） 下翻是pageUnCurl
+    tra.type = @"pageCurl";//翻页效果（上翻） 下翻是pageUnCurl
     //动画起始结束位置
     tra.startProgress=0.5;
     tra.endProgress=0.3;
@@ -251,9 +272,10 @@ static int i=0;
     [UIView animateWithDuration:1.0f animations:^{
         //可以通过按钮点击比较两个效果
         //使用make,是相对于最原始的位置做的改变
-//        self.imageView.transform=CGAffineTransformMakeTranslation(0, 100);
+        //把这个也打开试试
+//        self.imageView.transform = CGAffineTransformMakeTranslation(0, 100);
         //相对于上一次做改变
-        self.imageView.transform=CGAffineTransformTranslate(self.imageView.transform, 0, -100);
+        self.imageView.transform = CGAffineTransformTranslate(self.imageView.transform, 0, 100);
     }];
 }
 //旋转
@@ -599,7 +621,6 @@ static int i=0;
     self.colorLayer = [CALayer layer];
     self.colorLayer.frame = CGRectMake(50.0f, 50.0f, 100.0f, 100.0f);
     self.colorLayer.backgroundColor = [UIColor blueColor].CGColor;
-    //add it to our view
     [self.view.layer addSublayer:self.colorLayer];
     
     //点击后
@@ -611,12 +632,14 @@ static int i=0;
                          (__bridge id)[UIColor redColor].CGColor,
                          (__bridge id)[UIColor greenColor].CGColor,
                          (__bridge id)[UIColor blueColor].CGColor ];
-    //add timing function
+    //+ timing function
     CAMediaTimingFunction *fn = [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseIn];
     //CAKeyframeAnimation有一个NSArray类型的timingFunctions属性，我们可以用它来对每次动画的步骤指定不同的计时函数。但是指定函数的个数一定要等于keyframes数组的元素个数减一，因为它是描述每一帧之间动画速度的函数。
     animation.timingFunctions = @[fn, fn, fn];
-    //apply animation to layer
+    //应用 animation 到 layer
     [self.colorLayer addAnimation:animation forKey:nil];
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
