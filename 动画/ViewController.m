@@ -23,6 +23,9 @@
 @property (nonatomic, strong) UIImageView *ballView;
 @property(strong,nonatomic)UISlider *slider;
 @property(strong,nonatomic)ProgressView *progressView;
+@property (nonatomic, strong) UILabel *numL;
+@property (nonatomic, assign) NSInteger num,i;
+@property (nonatomic, strong) UILabel *tipLable;
 @end
 
 @implementation ViewController
@@ -40,6 +43,25 @@
  2.要根据路径做动画时
  3要做转场动画时
  */
+//UIView动画只是Core Animation动画的UIKit层封装，都是CAAnimation对象完成的
+/**
+ 核心动画中所有类都遵守CAMediaTiming。
+ CAAnaimation是个抽象类，不具备动画效果，必须用它的子类（CAAnimationGroup和CATransition）才有动画效果。
+ CAAnimationGroup（动画组），可以同时进行缩放，旋转。
+ CATransition（转场动画），界面之间跳转都可以用转场动画。用于做转场动画，能够为层提供移出屏幕和移入屏幕的动画效果。iOS比Mac OS X的转场动画效果少一点.UINavigationController就是通过CATransition实现了将控制器的视图推入屏幕的动画效果
+ 
+ 使用UIView动画函数实现转场动画
+ 单视图
+ + (void)transitionWithView:(UIView *)view ...
+ 双视图
+ + (void)transitionFromView:(UIView *)fromView...
+ 
+ CAPropertyAnimation也是个抽象类，本身不具备动画效果，只有子类（CABasicAnimation和CAKeyframeAnimation）才有动画效果。
+ CABasicAnimation（基础动画），做一些简单效果。
+ CAKeyframeAnimation（帧动画），做一些连续的流畅的动画。
+ */
+
+
 
 //显示动画
 - (void)viewDidLoad {
@@ -88,9 +110,48 @@
 
 //    [self makeTransform];
     
-    _colorView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    _colorView.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:_colorView];
+
+//     _num = 10;
+//    self.numL = ({
+//              UILabel *numL = [[UILabel alloc]init];
+//        numL.text = [NSString stringWithFormat:@"%ld",(long)_num];
+//        [self.view addSubview:numL];
+//        numL.frame = CGRectMake( 100, 100, 30, 20);
+//              numL;
+//          });
+    [self creatImgView];
+
+    self.ballView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"第1名"]];
+    self.ballView.frame = CGRectMake(200, 200, 50, 50);
+    [self.view addSubview:self.ballView];
+  
+}
+
+//https://www.renfei.org/blog/ios-8-spring-animation.html
+/**
+ usingSpringWithDamping的范围为0.0f到1.0f，数值越小「弹簧」的振动效果越明显。
+ initialSpringVelocity则表示初始的速度，数值越大一开始移动越快.值得注意的是，初始速度取值较高而时间较短时，也会出现反弹情况。
+ */
+//礼物数字
+- (void)giftNum {
+    _num ++;
+    self.numL.text = [NSString stringWithFormat:@"%ld",(long)_num];
+    self.numL.transform = CGAffineTransformMakeScale(2, 2);
+    [UIView animateWithDuration:0.7 delay:0.0 usingSpringWithDamping:0.3 initialSpringVelocity:0.3 options:0 animations:^{
+        self.numL.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+         
+    }];
+}
+
+- (void)giftPic {
+    
+    self.ballView.transform = CGAffineTransformMakeScale(2, 2);
+    [UIView animateWithDuration:0.7 delay:0.0 usingSpringWithDamping:0.3 initialSpringVelocity:0.3 options:0 animations:^{
+        self.ballView.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+         
+    }];
 }
 
 //放大过程中出现的缓慢动画
@@ -134,7 +195,22 @@
 //    [self viewTiming];
     
 //    [self shakeToShow:_colorView];
+    
+//    [self giftNum];
+//    [self rotationAni];
+//    [self baseAnimation];
+//    [self basic];
+//    [self CAMediaTimingFunction];
 
+//    [self beziePatchAnimation];
+//    [self giftPic];
+//    [self grupAnimation];
+    //转场
+//    [self transitionAnimation];
+    //
+//    [self loop];
+//    [self shaperLayerAnimations];
+    [self twoblock];
 }
 
 -(void)creatImgView
@@ -143,11 +219,170 @@
 //    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(0, HOME_SCREEN_HEIGHT, HOME_SCREEN_WIDTH, 300)];
 
 //        self.imageView.center=self.view.center;
-    self.imageView.backgroundColor=[UIColor blackColor];
-//        self.imageView.image=[UIImage imageNamed:@"第1名"];
+//    self.imageView.backgroundColor=[UIColor blackColor];
+        self.imageView.image=[UIImage imageNamed:@"第1名"];
         [self.view addSubview:self.imageView];
   
 
+}
+
+- (void)creatLabel {
+    self.tipLable = [[UILabel alloc]initWithFrame:CGRectMake(-200, 100, 200, 20)];
+    self.tipLable.text = @"欢迎进入直播间";
+    [self.view addSubview:self.tipLable];
+    
+}
+
+#pragma mark 动画组
+- (void)grupAnimation{
+    //动画组可以执行一组动画
+    //创建一个动画组
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+
+    //平移
+    CABasicAnimation *anim = [CABasicAnimation animation];
+
+    anim.keyPath = @"position.y";
+    anim.toValue = @400;
+
+    //缩放
+
+    CABasicAnimation *scaleAnim = [CABasicAnimation animation];
+    scaleAnim.keyPath = @"transform.scale";
+    scaleAnim.toValue = @2.0;
+
+    //设置动画组属性
+    group.animations = @[anim,scaleAnim];
+
+    //    group.duration = 1;
+    //    group.repeatCount = MAXFLOAT;
+    //    group.autoreverses = YES;
+    group.removedOnCompletion = NO;
+    group.fillMode = kCAFillModeForwards;
+    //添加动画
+    [self.imageView.layer addAnimation:group forKey:nil];
+    /**
+      使用动画组的好处,不需要每次都去添加动画,设置动画完成时的属性.
+      只需要把要执行的动画,添加到动画组的animations数组当中即可,
+      最后把组动画添加到层上面,就会自动执行数组当中的动画.
+      动画完成时设置的属性也只需要设置一次.
+     */
+}
+#pragma mark 转场动画
+- (void)transitionAnimation{
+    //转场动画
+    //什么是转场动画？
+    //就是从一个场景转换到另外一个场景，像导航控制器的push效果，就是一个转场
+
+    //创建一个转场动画
+    CATransition * anim = [CATransition animation];
+    //设置转场类型
+    anim.type = @"cube";
+    anim.duration = 1;
+    //设置转场的方向
+    anim.subtype = kCATransitionFromLeft;
+    //设置动画开始的位置
+    //anim.startProgress = 0.5;
+    //设置动画结束的位置
+    //anim.endProgress = 0.8;
+    //添加动画
+    [self.imageView.layer addAnimation:anim forKey:nil];
+    
+    _i += 1;
+    if (_i > 3) {
+        _i = 1;
+    }
+    self.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%ld",(long)_i]];
+
+    //使用uiview进行转场动画
+    [UIView transitionWithView:self.imageView duration:1 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
+  
+        self->_i += 1;
+        if (self->_i > 3) {
+            self->_i = 1;
+     }
+        self.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",self->_i]];
+  
+} completion:nil];
+}
+
+//转圈
+- (void)loop {
+    CAKeyframeAnimation *anim = [CAKeyframeAnimation animation];
+      //     设置动画属性
+      anim.keyPath = @"position";
+      //设置path************************
+      UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(60, 60, 100, 100)];
+      anim.path = path.CGPath;
+      anim.duration = 0.25;
+      // 取消反弹
+      anim.removedOnCompletion = NO;
+      anim.fillMode = kCAFillModeForwards;
+      anim.repeatCount = MAXFLOAT;
+      [self.imageView.layer addAnimation:anim forKey:nil];
+}
+
+-(void)shaperLayerAnimations{
+//图形开始位置的动画
+CABasicAnimation *startAnim = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+startAnim.duration = 5;
+startAnim.fromValue = @(0);
+startAnim.toValue = @(0.6);
+    
+//图形结束位置的动画
+CABasicAnimation *endAnim = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+endAnim.duration = 5;
+endAnim.fromValue = @(0.4);
+endAnim.toValue = @(1);
+    
+//把两个动画合并，绘制的区域就会不断变动
+CAAnimationGroup *group = [[CAAnimationGroup alloc] init];
+group.animations = @[startAnim, endAnim];
+group.duration = 5;
+group.autoreverses = YES;
+    
+CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
+shapeLayer.frame = self.view.bounds;
+   
+//图形是一大一小两个圆相切嵌套
+UIBezierPath *path = [[UIBezierPath alloc] init];
+[path addArcWithCenter:CGPointMake(100, 300) radius:100 startAngle:0 endAngle:M_PI*2 clockwise:YES];
+[path addArcWithCenter:CGPointMake(150, 300) radius:50 startAngle:0 endAngle:M_PI*2 clockwise:YES];
+shapeLayer.path = [path CGPath];
+shapeLayer.strokeColor = [UIColor redColor].CGColor;
+shapeLayer.fillColor = [UIColor whiteColor].CGColor;
+    
+[shapeLayer addAnimation:group forKey:@"runningLine"];
+[self.view.layer addSublayer:shapeLayer];
+}
+//Nesting Animation Blocks-嵌套动画块
+/**
+ 您可以通过嵌套其他动画块，为动画块的某些部分分配不同的时序和配置选项。 顾名思义，嵌套动画块是在现有动画块内创建新的动画块。 嵌套动画与任何父动画同时启动，但运行（大多数情况下）具有自己的配置选项。 默认情况下，嵌套动画会继承父级的持续时间和动画曲线，如果需要重新设置，只需要在嵌套动画块中使用UIViewAnimationOptionOverrideInheritedCurve和UIViewAnimationOptionOverrideInheritedDuration键，这两个值允许为第二个动画设置自己的动画曲线和持续时间值。
+
+ */
+- (void)twoblock {
+    [UIView animateWithDuration:1.0
+    delay: 1.0
+    options:UIViewAnimationOptionCurveEaseOut
+    animations:^{
+        self.imageView.alpha = 0.0;
+        // Create a nested animation that has a different
+        // duration, timing curve, and configuration.
+        [UIView animateWithDuration:0.2
+             delay:0.0
+             options: UIViewAnimationOptionOverrideInheritedCurve |
+                      UIViewAnimationOptionCurveLinear |
+                      UIViewAnimationOptionOverrideInheritedDuration |
+                      UIViewAnimationOptionRepeat |
+                      UIViewAnimationOptionAutoreverse
+             animations:^{
+                  [UIView setAnimationRepeatCount:2.5];
+                  self.ballView.alpha = 0.0;
+             }
+             completion:nil];
+
+    }
+    completion:nil];
 }
 #pragma mark - 各种动画
 //动画组
@@ -229,8 +464,8 @@ static int i=0;
 //1.指定values
 -(void)rotationAni
 {
-    
-    [self creatImgView];
+
+//    [self creatImgView];
      //CAKeyframeAnimation可以设置多个值
     CAKeyframeAnimation *ani=[CAKeyframeAnimation animation];
     //属性值
@@ -239,7 +474,7 @@ static int i=0;
     //执行次数
     ani.repeatCount=MAXFLOAT;//这里等价于    ani.values=@[@(AngleFromNumber(-5)),@(AngleFromNumber(5)),@(AngleFromNumber(-5))];
    //执行时间（可以控制动画的快慢）
-    ani.duration=2;
+    ani.duration= 1;
     
     //执行完后自动返回
     ani.autoreverses=YES;
@@ -268,14 +503,23 @@ static int i=0;
 -(void)makeTransform
 {
    
-    [self creatImgView];
+    [self creatLabel];
+    self.tipLable.alpha = 1;
+
+//    [UIView animateWithDuration:1.0f delay:0.3 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:0 animations:^{
+//        self.tipLable.transform = CGAffineTransformMakeTranslation(300, 0);
+//    } completion:^(BOOL finished) {
+//        self.tipLable.alpha = 0;
+//    }];
+    
+    
     [UIView animateWithDuration:1.0f animations:^{
         //可以通过按钮点击比较两个效果
         //使用make,是相对于最原始的位置做的改变
         //把这个也打开试试
-//        self.imageView.transform = CGAffineTransformMakeTranslation(0, 100);
+        self.tipLable.transform = CGAffineTransformMakeTranslation(200, 0);
         //相对于上一次做改变
-        self.imageView.transform = CGAffineTransformTranslate(self.imageView.transform, 0, 100);
+//        self.imageView.transform = CGAffineTransformTranslate(self.imageView.transform, 0, 200);
     }];
 }
 //旋转
@@ -319,7 +563,6 @@ static int i=0;
     //两个同时设置可不返回
     [ani setRemovedOnCompletion:NO];
     ani.fillMode=kCAFillModeForwards;
-
     [redV.layer addAnimation:ani forKey:nil];
     
 }
@@ -565,7 +808,9 @@ static int i=0;
 //动画速度
 -(void)CAMediaTimingFunction
 {
+    //效果是手指点到哪儿colorLayer跟着移动
     //写在view DidLoad里
+    
     self.colorLayer = [CALayer layer];
     self.colorLayer.frame = CGRectMake(0, 0, 100, 100);
     self.colorLayer.position = CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0);
@@ -586,7 +831,7 @@ static int i=0;
      */
     //set the position
     //运行打开注释
- //   self.colorLayer.position = [[touches anyObject] locationInView:self.view];
+//    self.colorLayer.position = [[touches anyObject] locationInView:self.view];
     //commit transaction
     [CATransaction commit];
 }
@@ -634,7 +879,7 @@ static int i=0;
                          (__bridge id)[UIColor blueColor].CGColor ];
     //+ timing function
     CAMediaTimingFunction *fn = [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseIn];
-    //CAKeyframeAnimation有一个NSArray类型的timingFunctions属性，我们可以用它来对每次动画的步骤指定不同的计时函数。但是指定函数的个数一定要等于keyframes数组的元素个数减一，因为它是描述每一帧之间动画速度的函数。
+    //CAKeyframeAnimation有一个NSArray类型的timingFunctions属性，我们可以用它来对每次动画的步骤指定不同的计时函数。但是指定函数的个数一定要等于keyframecas数组的元素个数减一，因为它是描述每一帧之间动画速度的函数。
     animation.timingFunctions = @[fn, fn, fn];
     //应用 animation 到 layer
     [self.colorLayer addAnimation:animation forKey:nil];
