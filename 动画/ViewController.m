@@ -215,12 +215,12 @@
 
 -(void)creatImgView
 {
-        self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 20, 30)];
+        self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 80, 80)];
 //    self.imageView= [[UIImageView alloc]initWithFrame:CGRectMake(0, HOME_SCREEN_HEIGHT, HOME_SCREEN_WIDTH, 300)];
 
 //        self.imageView.center=self.view.center;
 //    self.imageView.backgroundColor=[UIColor blackColor];
-        self.imageView.image=[UIImage imageNamed:@"第1名"];
+        self.imageView.image=[UIImage imageNamed:@"666"];
         [self.view addSubview:self.imageView];
   
 
@@ -360,6 +360,13 @@ shapeLayer.fillColor = [UIColor whiteColor].CGColor;
  您可以通过嵌套其他动画块，为动画块的某些部分分配不同的时序和配置选项。 顾名思义，嵌套动画块是在现有动画块内创建新的动画块。 嵌套动画与任何父动画同时启动，但运行（大多数情况下）具有自己的配置选项。 默认情况下，嵌套动画会继承父级的持续时间和动画曲线，如果需要重新设置，只需要在嵌套动画块中使用UIViewAnimationOptionOverrideInheritedCurve和UIViewAnimationOptionOverrideInheritedDuration键，这两个值允许为第二个动画设置自己的动画曲线和持续时间值。
 
  */
+/**
+ alpha是不透明度，属性为浮点类型的值，取值范围从0到1.0，表示从完全透明到完全不透明，其特性有当前UIView的alpha值会被其所有subview继承。alpha值会影响到UIView跟其所有subview，alpha具有动画效果。当alpha为0时，跟hidden为YES时效果一样，但是alpha主要用于实现隐藏的动画效果，在动画块中将hidden设置为YES没有动画效果。
+ 
+ 设置backgroundColor的alpha值只影响当前UIView的背景，并不会影响其所有subview。Clear Color就是backgroundColor的alpha为1.0。alpha值会影响backgroundColor最终的alpha,假设UIView的alpha为0.8，backgroundColor的alpha为0.5，那么backgroundColor最终的alpha为0.4(0.8*0.5)。
+
+这里如果把alpha = 0.0改为hidden = YES  无动画效果
+ */
 - (void)twoblock {
     [UIView animateWithDuration:1.0
     delay: 1.0
@@ -378,6 +385,7 @@ shapeLayer.fillColor = [UIColor whiteColor].CGColor;
              animations:^{
                   [UIView setAnimationRepeatCount:2.5];
                   self.ballView.alpha = 0.0;
+
              }
              completion:nil];
 
